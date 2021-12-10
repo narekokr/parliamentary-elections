@@ -12,21 +12,13 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      districtName: {
-        type: Sequelize.STRING,
+      districtId: {
+        type: Sequelize.INTEGER,
         references: {
           model: 'Districts',
-          key: 'name'
+          key: 'id'
         }
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
     });
   },
   down: async (queryInterface, Sequelize) => {

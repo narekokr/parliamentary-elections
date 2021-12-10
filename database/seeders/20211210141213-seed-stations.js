@@ -6,13 +6,9 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const [ cities ] = await queryInterface.sequelize.query('SELECT id FROM Cities;');
     cities.forEach(async city => {
-      const street = await getRandomStreetById(city.id);
-      const address = await getRandomAddress(street.id);
-      await queryInterface.bulkInsert('PollingStations', [{
-        addressId: address.id,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }])
+      const [ street ] = await getRandomStreetById(city.id);
+      const address = await getRandomAddress(street[0].id);
+      await queryInterface.sequelize.query(`INSERT INTO PollingStations Values (DEFAULT, ${address.id})`);
     })
     
   },

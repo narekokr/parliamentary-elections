@@ -3,9 +3,10 @@ const getRandomCitizens = require('../../src/helpers/get-random-citizens');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const citizens = await getRandomCitizens(18, 600);
+    const [ citizens ] = await getRandomCitizens(18, 600);
     const [ parties ] = await queryInterface.sequelize.query('Select id from Parties');
     const [ elections ] = await queryInterface.sequelize.query('Select id from Elections');
+    const [ pollingStations ] = await queryInterface.sequelize.query('SELECT * FROM PollingStations');
     citizens.forEach(async citizen => {
       const num = Math.floor(Math.random() * 100);
       let vote;
@@ -16,13 +17,13 @@ module.exports = {
       } else {
         vote = parties[2].id
       }
-      await queryInterface.bulkInsert('Votes', [{
-        citizenId: citizen.id,
-        electionId: elections[0].id,
-        partyId: vote,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }])
+      const pollingStation = pollingStations[num % pollingStations.length];
+      await queryInterface.sequelize.query(`INSERT INTO Votes VALUES (DEFAULT, ${citizen.id}, ${vote}, ${pollingStation.id}, ${elections[0].id})`);
+      // await queryInterface.bulkInsert('Votes', [{
+      //   citizenId: citizen.id,
+      //   electionId: elections[0].id,
+      //   partyId: vote,
+      // }])
     })
     
   },

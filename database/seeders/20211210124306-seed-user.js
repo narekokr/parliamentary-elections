@@ -3,20 +3,15 @@ const faker = require('faker');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 100; i++) {
       const randomNum = Math.floor((Math.random() * 100) + 1);
       const gender = randomNum % 2 === 0 ? 'male' : 'female';
       const age  = Math.floor((Math.random() * 80) + 1);
-      await queryInterface.bulkInsert('Citizens', [{
-          SSN: i + 1,
-          firstName: faker.name.firstName(),
-          lastName: faker.name.lastName(),
-          gender,
-          DOB: new Date(Date.now() - 1000 * 60 * 60 * 24 * 365 * age),
-          email: faker.internet.email(),
-          createdAt: new Date(),
-          updatedAt: new Date()
-      }]);
+      const firstName = faker.name.firstName();
+      const lastName = faker.name.lastName();
+      const DOB = new Date(Date.now() - 1000 * 60 * 60 * 24 * 365 * age).toISOString().slice(0, 19).replace('T', ' ');
+      const email = faker.internet.email();
+      await queryInterface.sequelize.query(`INSERT INTO Citizens VALUES (DEFAULT,${i + 1},"${firstName}","${lastName}","${DOB}","${email}","${gender}")`);
     }
   },
 

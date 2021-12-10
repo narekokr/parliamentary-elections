@@ -3,11 +3,8 @@ const faker = require('faker');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Elections', [{
-      date: new Date(1640956988), //Dec 31st
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }])
+    const date  = new Date(1640980091000).toISOString().slice(0, 19).replace('T', ' '); //Dec 31st
+    await queryInterface.sequelize.query(`INSERT INTO Elections VALUES (DEFAULT, "${date}")`);
   },
 
   down: async (queryInterface, Sequelize) => {

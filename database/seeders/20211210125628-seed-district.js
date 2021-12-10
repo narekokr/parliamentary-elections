@@ -14,30 +14,15 @@ module.exports = {
       Shirak: ['Gyumri', 'Artik']
     }
     const citiesValues = [].concat(...Object.values(cities));
-    console.log(citiesValues);
     districts.forEach(async (district, index) => {
-      await queryInterface.bulkInsert('Districts', [{
-        name: district,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }]);
+      await queryInterface.sequelize.query(`INSERT INTO Districts VALUES (DEFAULT, "${district}")`);
+      const [ districtId ] = await queryInterface.sequelize.query(`SELECT id FROM Districts D WHERE D.name = "${district}"`);
       cities[district].forEach(async (city, index2) => {
         const id = citiesValues.indexOf(city) + 1;
-        await queryInterface.bulkInsert('Cities', [{
-          id,
-          name: city,
-          districtName: district,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        }]);
-
+        await queryInterface.sequelize.query(`INSERT INTO Cities VALUES (${id}, "${city}", ${districtId[0].id})`);
         for(let i = 0; i < 2; i++) {
-          await queryInterface.bulkInsert('Streets', [{
-            name: faker.address.streetName(),
-            cityId: id,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          }]);
+          const name = faker.address.streetName();
+          await queryInterface.sequelize.query(`INSERT INTO Streets VALUES (DEFAULT, "${name}", ${id})`);
         }
       })
     })

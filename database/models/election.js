@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     date: DataTypes.DATE
   }, {
     sequelize,
+    timestamps: false,
     modelName: 'Election',
   });
   return Election;

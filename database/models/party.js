@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     slogan: DataTypes.STRING
   }, {
     sequelize,
+    timestamps: false,
     modelName: 'Party',
   });
   return Party;

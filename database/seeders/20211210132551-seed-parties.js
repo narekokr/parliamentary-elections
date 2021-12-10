@@ -7,25 +7,13 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const parties = ['QP', 'Hayastan', 'Pativ Unem']
     parties.forEach(async party => {
-      const street = await getRandomStreet();
-      const address = await getRandomAddress(street.id);
-      await queryInterface.bulkInsert('Parties', [{
-        name: party,
-        slogan: faker.lorem.sentence(),
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }]);
-      const p = await queryInterface.rawSelect('Parties', {
-        where: {
-          name: party
-        }
-      }, ['id']);
-      await queryInterface.bulkInsert('PartyAddresses', [{
-        partyId: p,
-        addressId: address.id,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }])
+      const [ street ] = await getRandomStreet();
+      console.log(street);
+      const address = await getRandomAddress(street[0].id);
+      await queryInterface.sequelize.query(`INSERT INTO Parties VALUES (DEFAULT, "${party}", "${faker.lorem.sentence()}")`);
+
+      const [ p ] = await queryInterface.sequelize.query(`SELECT * FROM Parties P WHERE P.name = "${party}"`);
+      await queryInterface.sequelize.query(`INSERT INTO PartyAddresses VALUES (${p[0].id}, ${address.id})`);
     })
     
   },

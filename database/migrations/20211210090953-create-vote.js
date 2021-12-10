@@ -22,6 +22,13 @@ module.exports = {
           key: "id"
         }
       },
+      pollingStationId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'PollingStations',
+          key: 'id'
+        }
+      },
       electionId: {
         type: Sequelize.INTEGER,
         references: {
@@ -29,14 +36,6 @@ module.exports = {
           key: "id"
         }
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
     }, {
       uniqueKeys: {
           Vote_unique: {

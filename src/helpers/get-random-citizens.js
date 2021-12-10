@@ -2,13 +2,6 @@ const sequelize = require('../../database');
 const { Op } = require('sequelize')
 
 module.exports = function(age, limit) {
-    return sequelize.models.Citizen.findAll({
-        where: {
-          DOB: {
-            [Op.lte]: new Date(Date.now() - 1000 * 60 * 60 * 24 * 365 * age)
-          }
-        },
-        order: sequelize.random(),
-        limit
-      });
+  const date = new Date(Date.now() - 1000 * 60 * 60 * 24 * 365 * age).toISOString().slice(0, 19).replace('T', ' ')
+  return sequelize.query(`SELECT * FROM Citizens C WHERE C.DOB <= "${date}" LIMIT ${limit}`);
 }
