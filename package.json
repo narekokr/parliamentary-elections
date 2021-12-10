@@ -4,15 +4,30 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js",
+    "migrate:generate": "sequelize migration:generate",
+    "migrate:up": "sequelize db:migrate",
+    "migrate:down": "sequelize db:migrate:undo",
+    "migrate:down:all": "sequelize db:migrate:undo:all",
+    "seed:generate": "sequelize seed:generate",
+    "seed:up": "sequelize db:seed:all",
+    "seed:down": "sequelize db:seed:undo",
+    "seed:down:all": "sequelize db:seed:undo:all",
+    "model:generate": "sequelize model:generate",
+    "create-db": "sequelize db:create"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "faker": "^5.5.3",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.12.0-beta.1"
+    "sequelize": "^6.12.0-beta.1",
+    "sequelize-cli": "^6.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }

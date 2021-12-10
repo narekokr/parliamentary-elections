@@ -1,0 +1,10 @@
+[
+  "20211210124306-seed-user.js",
+  "20211210125628-seed-district.js",
+  "20211210132147-seed-election.js",
+  "20211210132551-seed-parties.js",
+  "20211210134507-seed-candidates.js",
+  "20211210141213-seed-stations.js",
+  "20211210143032-seed-citizen-addresses.js",
+  "20211210152643-seed-votes.js"
+]
