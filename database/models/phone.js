@@ -4,14 +4,14 @@ module.exports = (sequelize, DataTypes) => {
   class Phone extends Model {
     static associate(models) {
       Phone.belongsTo(models.Citizen, {
-        foreignKey: "SSN",
-        targetKey: "SSN"
+        foreignKey: "citizenId",
+        targetKey: "id"
       });
     }
   }
   Phone.init(
     {
-      SSN: DataTypes.INTEGER,
+      citizenId: DataTypes.INTEGER,
       number: DataTypes.INTEGER
     },
     {

@@ -5,18 +5,6 @@ const seedAddresses = require('../../src/helpers/seed-addresses');
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await seedAddresses();
-    // const [ citizens ] = await queryInterface.sequelize.query('SELECT id FROM Citizens;');
-    // console.log(citizens);
-    // citizens.forEach(async (citizen, index) => {
-    //     const street = await getRandomStreet();
-    //   const address = await getRandomAddress(street.id);
-    //     await queryInterface.bulkInsert('CitizenAddresses', [{
-    //     citizenId: citizen.id,
-    //     addressId: address.id,
-    //     createdAt: new Date(),
-    //     updatedAt: new Date()
-    //   }]);
-    //   })
   },
 
   down: async (queryInterface, Sequelize) => {

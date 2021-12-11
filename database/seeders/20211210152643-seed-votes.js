@@ -19,11 +19,6 @@ module.exports = {
       }
       const pollingStation = pollingStations[num % pollingStations.length];
       await queryInterface.sequelize.query(`INSERT INTO Votes VALUES (DEFAULT, ${citizen.id}, ${vote}, ${pollingStation.id}, ${elections[0].id})`);
-      // await queryInterface.bulkInsert('Votes', [{
-      //   citizenId: citizen.id,
-      //   electionId: elections[0].id,
-      //   partyId: vote,
-      // }])
     })
     
   },

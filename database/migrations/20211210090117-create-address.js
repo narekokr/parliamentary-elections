@@ -19,13 +19,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-    }, {
-      // uniqueKeys: {
-      //     Address_unique: {
-      //         fields: ['streetId', 'building']
-      //     }
-      // }
-  });
+    });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable("Addresses");

@@ -7,7 +7,6 @@ runServer();
 
 async function runServer() {
     try {
-        console.log(1)
         await sequelize.authenticate();
         app.listen(config.port, () => {
             console.info(`Server is running on the port ${config.port}`);

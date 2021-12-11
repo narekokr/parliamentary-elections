@@ -4,7 +4,7 @@ SELECT P.name, count(*) as votes
 FROM Votes V 
 JOIN Parties P ON P.id = V.partyId 
 GROUP BY V.partyId
-ORDER BY votes desc;
+ORDER BY votes DESC;
 
 
 WITH addresses as (
@@ -20,7 +20,8 @@ FROM Votes V
 JOIN Parties P ON P.id = V.partyId 
 JOIN PollingStations PS ON V.pollingStationId = PS.id 
 WHERE PS.addressId in (SELECT * FROM addresses) 
-GROUP BY P.name;
+GROUP BY P.name
+ORDER BY votes DESC;
 
 
 WITH addresses as (
@@ -41,9 +42,11 @@ GROUP BY P.name;
 
 UPDATE Phones JOIN Citizens ON Phones.citizenId = Citizens.id 
 	SET number = "+374-77-99-55"
-    WHERE Citizens.SSN = 20;
+    WHERE Citizens.SSN = 11;
 
-SELECT * FROM Phones;
+SELECT P.number as phoneNumber, C.id as id, C.SSN as SSN 
+FROM Phones P 
+JOIN Citizens C ON C.id = P.citizenId;
 
 
 
@@ -55,6 +58,7 @@ INSERT INTO Phones (id, citizenId, number)
         );
         
 SELECT * FROM Phones WHERE citizenId = 90; 
+
 
 
 DELETE FROM Phones 

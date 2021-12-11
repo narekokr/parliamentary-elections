@@ -1,25 +1,36 @@
-const express = require('express');
-const sequelize = require('../database');
-const faker = require('faker');
+const express = require("express");
+const sequelize = require("../database");
 const app = express();
 
-app.post('/citizens', async (req, res) => {
-    const { number } = req.query;
-    for (let i = 0; i < +number; i++) {
-        const randomNum = Math.floor((Math.random() * 100) + 1);
-        const gender = randomNum % 2 === 0 ? 'male' : 'female';
-        const age  = Math.floor((Math.random() * 80) + 1);
-        await sequelize.models.Citizen.create({
-            SSN: Date.now() - 1639130000000,
-            firstName: faker.name.firstName(),
-            lastName: faker.name.lastName(),
-            gender,
-            DOB: Date.now() - 1000 * 60 * 60 * 24 * 365 * age,
-            email: faker.internet.email()
-        });
-    }
+app.get("/citizens", async (req, res) => {
+  const { limit } = req.query;
+  const citizens = await sequelize.models.Citizen.findAll({limit: +limit});
 
-    res.status(201).send('Done');
-})
+  res.status(200).send(citizens);
+});
+
+app.get('/winner', async (req, res) => {
+    const [ winner ]= await sequelize.query(`SELECT P.name, count(*) as votes 
+    FROM Votes V 
+    JOIN Parties P ON P.id = V.partyId 
+    GROUP BY V.partyId
+    ORDER BY votes DESC
+    LIMIT 1;`);
+
+    res.status(200).send(winner);
+});
+
+app.post('/phone', async (req, res) => {
+    const { SSN, number } = req.query;
+    const citizen = await sequelize.models.Citizen.findOne({where: 
+        { SSN: +SSN }
+    });
+    await sequelize.models.Phone.create({
+        citizenId: citizen.id,
+        number
+    });
+
+    res.status(201).send();
+});
 
 module.exports = app;
