@@ -24,3 +24,5 @@ If the last command throws an error, undo  the seeds by running `npx sequelize d
 Once the DB is ready, run `npm start` to start the server
 
 Or find some SQL queries in the example file
+
+Alternatively, use the `Elections-Backup.sql` file to import the databse, tables and some sample data, without using the migrations and seeders
