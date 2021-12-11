@@ -34,6 +34,5 @@ module.exports = {
     await queryInterface.sequelize.query('TRUNCATE TABLE Cities;');
     await queryInterface.sequelize.query('TRUNCATE TABLE Streets;');
     await queryInterface.sequelize.query("SET FOREIGN_KEY_CHECKS = 1");
-
   }
 };

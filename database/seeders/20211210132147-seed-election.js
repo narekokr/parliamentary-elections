@@ -11,6 +11,5 @@ module.exports = {
     await queryInterface.sequelize.query("SET FOREIGN_KEY_CHECKS = 0");
     await queryInterface.sequelize.query('TRUNCATE TABLE Elections;');
     await queryInterface.sequelize.query("SET FOREIGN_KEY_CHECKS = 1");
-
   }
 };

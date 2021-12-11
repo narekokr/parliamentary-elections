@@ -29,7 +29,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       gender: {
-        type: Sequelize.STRING,
+        type: Sequelize.ENUM(['male', 'female', 'other']),
         allowNull: false,
       },
     });

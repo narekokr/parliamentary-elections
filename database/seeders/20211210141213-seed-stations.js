@@ -10,7 +10,6 @@ module.exports = {
       const address = await getRandomAddress(street[0].id);
       await queryInterface.sequelize.query(`INSERT INTO PollingStations Values (DEFAULT, ${address.id})`);
     })
-    
   },
 
   down: async (queryInterface, Sequelize) => {
